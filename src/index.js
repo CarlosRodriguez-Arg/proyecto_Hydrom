@@ -7,7 +7,4 @@ app.listen(puerto, ()=>{
   console.log(`Escuchando puerto: http://localhost:${puerto}`)
 });
 
-app.get('/', (req,res)=>{
-  res.send('Conectado al servidor')
-});
 
