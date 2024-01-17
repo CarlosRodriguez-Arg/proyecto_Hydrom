@@ -1,7 +1,7 @@
 const enrutadorPrueba = require('./endpointPrueba');
 
 function rutasApi(app){
-  app.use(enrutadorPrueba);
+  app.use('/prueba', enrutadorPrueba);
 }
 
 module.exports = rutasApi;
