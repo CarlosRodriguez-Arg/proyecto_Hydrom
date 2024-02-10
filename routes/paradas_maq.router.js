@@ -1,8 +1,8 @@
 const { faker } = require('@faker-js/faker');
 const express = require('express');
-const paradas_maq = express.Router();
+const enrutador_paradas_maq = express.Router();
 
-paradas_maq.get('/info_paradas', (req, res)=>{
+enrutador_paradas_maq.get('/info_paradas', (req, res)=>{
   let paradas = [];
 
   for (let index = 0; index < 10; index++) {
@@ -15,9 +15,8 @@ paradas_maq.get('/info_paradas', (req, res)=>{
       hora_puesta_marcha: '20:30',
       tipo_intervencion: 'Correctiva',
     })
-
   }
   res.json(paradas)
 })
 
-module.exports = paradas_maq;
+module.exports = enrutador_paradas_maq;

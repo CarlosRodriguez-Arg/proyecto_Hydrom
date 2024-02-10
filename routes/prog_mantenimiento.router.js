@@ -1,8 +1,8 @@
 const { faker } = require('@faker-js/faker');
 const express = require('express')
-const programa_mantenimiento = express.Router();
+const enrutador_programa_mantenimiento = express.Router();
 
-programa_mantenimiento.get('/tareas', (req, res)=>{
+enrutador_programa_mantenimiento.get('/tareas', (req, res)=>{
   let tareas_programadas = [];
 
   for (let index = 0; index < 10; index++) {
@@ -22,7 +22,7 @@ programa_mantenimiento.get('/tareas', (req, res)=>{
   res.json(tareas_programadas);
 })
 
-programa_mantenimiento.get('/tareas/:id_maq', (req, res)=>{
+enrutador_programa_mantenimiento.get('/tareas/:id_maq', (req, res)=>{
   const {id_maq} = req.params;
   let tareas_programadas = [];
 
@@ -51,4 +51,4 @@ programa_mantenimiento.get('/tareas/:id_maq', (req, res)=>{
 //   })
 // })
 
-module.exports = programa_mantenimiento;
+module.exports = enrutador_programa_mantenimiento;
