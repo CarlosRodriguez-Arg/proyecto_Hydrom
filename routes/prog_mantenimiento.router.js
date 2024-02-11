@@ -2,7 +2,7 @@ const { faker } = require('@faker-js/faker');
 const express = require('express')
 const enrutador_programa_mantenimiento = express.Router();
 
-enrutador_programa_mantenimiento.get('/tareas', (req, res)=>{
+enrutador_programa_mantenimiento.get('/', (req, res)=>{
   let tareas_programadas = [];
 
   //generamos informacion falsa para probar el manejador de ruta

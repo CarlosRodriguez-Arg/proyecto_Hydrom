@@ -2,7 +2,9 @@ const { faker } = require('@faker-js/faker');
 const express = require('express');
 const enrutador_paradas_maq = express.Router();
 
-enrutador_paradas_maq.get('/info_paradas', (req, res)=>{
+
+
+enrutador_paradas_maq.get('/', (req, res)=>{
   let paradas = [];
 
 //generamos informacion falsa para probar el manejador de ruta
@@ -19,5 +21,13 @@ enrutador_paradas_maq.get('/info_paradas', (req, res)=>{
   }
   res.json(paradas)
 })
+
+
+//Este es el manejador para cargar las paradas de maquina
+enrutador_paradas_maq.post('/', (req, res)=>{
+  const peticion = req.body;
+  res.json(peticion);
+})
+
 
 module.exports = enrutador_paradas_maq;
