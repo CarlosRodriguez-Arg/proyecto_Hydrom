@@ -1,12 +1,16 @@
+      //IMPORTS
+
 const express = require('express');
+
+
+      //ROUTER
+
 const enrutador_int_preventivas = express.Router();
 
 
+      //ROUTE HANDLER: GET
 
-
-
-//Este manejador tiene que traer todas las intervenciones preventivas
-enrutador_int_preventivas.get('/', (req, res)=>{
+enrutador_int_preventivas.get('/', (req, res)=>{   //Este manejador tiene que traer todas las intervenciones preventivas
   res.json({
     fecha_hora_lanzamiento: '14/05/2024 13:45',
     maquina: 'Anayak',
@@ -20,17 +24,11 @@ enrutador_int_preventivas.get('/', (req, res)=>{
       componente: 'filtro',
       completada: 'true'
     }],
-
-
-     //En mi opinion no deberia aclarar el consumo ya que esta definido en cada tarea
-        //si la tarea se completo deberia haber usado el recurso asociado a ella
-      //Dejamos esta propiedad para el uso de recursos adicionales a los ya definidos
-        //para las tareas
-    consumo_rep_insumos_adicionales: [{
-      id_rep_insumo: 2344,
+    consumo_rep_insumos_adicionales: [{  //En mi opinion no deberia aclarar el consumo ya que esta definido en cada tarea
+      id_rep_insumo: 2344,               //y si la tarea se completo deberia haber usado el recurso asociado a ella
       denominacion: 'filtro',
-      cantidad: 1,
-      unidad_medida: 'unidad'
+      cantidad: 1,                       //Dejamos la propiedad consumo_rep_insumos_adicionales para el uso de recursos
+      unidad_medida: 'unidad'            //adicionales a los ya definidos para las tareas
     }],
     fecha_parada:'14/05/2024',
     hora_parada: '13:45',
@@ -50,5 +48,7 @@ enrutador_int_preventivas.get('/', (req, res)=>{
   })
 });
 
+
+      //EXPORT
 
 module.exports = enrutador_int_preventivas;

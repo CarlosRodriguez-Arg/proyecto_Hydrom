@@ -1,12 +1,17 @@
+      //IMPORTS
 const express = require('express');
+
+
+      //ROUTER
 const enrutador_int_correctivas = express.Router();
+
+
+      //ROUTE HANDLER: GET
 
 enrutador_int_correctivas.get('/', (req, res)=>{
 
-  //Envio de respuesta falsa para probar manejador
-  //en teoria deberia traer todos estos datos la peticion
-  res.json({
-    fecha_parada: '14/05/2024',
+  res.json({                                         //Envio de respuesta falsa para probar manejador
+    fecha_parada: '14/05/2024',                     //en teoria deberia traer todos estos datos la peticion
     hora_parada: '13:45',
     maquina: 'Anayak',
     fecha_solicitud_rep: '14/05/2024',
@@ -38,5 +43,8 @@ enrutador_int_correctivas.get('/', (req, res)=>{
     hora_entrega: '21:30'
   })
 })
+
+
+      //EXPORT
 
 module.exports = enrutador_int_correctivas;

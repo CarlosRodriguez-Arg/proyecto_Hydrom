@@ -1,16 +1,22 @@
+      //IMPORTS
+
 const { faker } = require('@faker-js/faker');
-const express = require('express')
+const express = require('express');
+
+
+      //ROUTER
 const enrutador_programa_mantenimiento = express.Router();
+
+
+      //ROUTE HANDLER: GET
 
 enrutador_programa_mantenimiento.get('/', (req, res)=>{
   let tareas_programadas = [];
 
-  //generamos informacion falsa para probar el manejador de ruta
-  for (let index = 0; index < 10; index++) {
+  for (let index = 0; index < 10; index++) {    //generamos informacion falsa para probar el manejador de ruta
     tareas_programadas.push({
 
-      //Esta es la informacion que necesitaria ver en este ENDPOINT
-      maquina: faker.airline.airplane(),
+      maquina: faker.airline.airplane(),   //Esta es la informacion que necesitaria ver en este ENDPOINT
       tipo_tarea: 'reemplazar',
       componente: faker.commerce.productName(),
       criticidad: faker.number.int({min:0,max:10}),
@@ -35,8 +41,7 @@ enrutador_programa_mantenimiento.get('/', (req, res)=>{
     });
   }
 
-  //enviamos repuesta
-  res.json(tareas_programadas);
+  res.json(tareas_programadas); //enviamos repuesta
 })
 
 enrutador_programa_mantenimiento.get('/tareas/:id_maq', (req, res)=>{
@@ -60,12 +65,7 @@ enrutador_programa_mantenimiento.get('/tareas/:id_maq', (req, res)=>{
   res.json(tareas_programadas);
 })
 
-// rutaPrueba.post('/', (req, res)=>{
-//   const contenido = req.body;
-//   res.json({
-//     message: 'created',
-//     data: contenido
-//   })
-// })
+
+      //EXPORT
 
 module.exports = enrutador_programa_mantenimiento;
