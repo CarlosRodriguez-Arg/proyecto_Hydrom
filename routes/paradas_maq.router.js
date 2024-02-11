@@ -5,6 +5,7 @@ const enrutador_paradas_maq = express.Router();
 enrutador_paradas_maq.get('/info_paradas', (req, res)=>{
   let paradas = [];
 
+//generamos informacion falsa para probar el manejador de ruta
   for (let index = 0; index < 10; index++) {
     paradas.push({
       fecha_parada: faker.date.birthdate(),

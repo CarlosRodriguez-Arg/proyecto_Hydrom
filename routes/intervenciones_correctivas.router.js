@@ -2,6 +2,9 @@ const express = require('express');
 const enrutador_int_correctivas = express.Router();
 
 enrutador_int_correctivas.get('/', (req, res)=>{
+
+  //Envio de respuesta falsa para probar manejador
+  //en teoria deberia traer todos estos datos la peticion
   res.json({
     fecha_parada: '14/05/2024',
     hora_parada: '13:45',
