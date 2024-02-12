@@ -31,7 +31,7 @@ enrutador_paradas_maq.get('/', (req, res)=>{
 
 enrutador_paradas_maq.post('/', (req, res)=>{   //Este es el manejador para cargar las paradas de maquina
   const peticion = req.body;
-  res.json(peticion);
+  res.status(201).json(peticion);
 })
 
 
@@ -46,5 +46,19 @@ enrutador_paradas_maq.patch('/:id_parada', (req, res)=>{   //Este es el manejado
   })
 })
 
+
+      //ROUTE HANDLER: DELETE
+
+enrutador_paradas_maq.delete('/:id_parada', (req, res)=>{
+  const { id_parada} = req.params;
+
+  res.json({
+    id: id_parada,
+    message: 'Se elimino la parada'
+  })
+});
+
+
+      //EXPORT
 
 module.exports = enrutador_paradas_maq;
