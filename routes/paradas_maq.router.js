@@ -1,6 +1,7 @@
       //IMPORTS
 
 const express = require('express');
+const boom = require('@hapi/boom');
 const paradas = require('../services/paradas_maquina.service');
 
 
@@ -27,7 +28,7 @@ enrutador_paradas_maq.post('/', (req, res)=>{   //Este es el manejador para carg
 
       //ROUTE HANDLER: PATCH
 
-enrutador_paradas_maq.patch('/:id_parada', (req, res)=>{   //Este es el manejador para actualizar las paradas de maquina
+enrutador_paradas_maq.patch('/:id_parada', (req, res, next)=>{   //Este es el manejador para actualizar las paradas de maquina
 
   const { id_parada } = req.params;
 
@@ -38,17 +39,20 @@ enrutador_paradas_maq.patch('/:id_parada', (req, res)=>{   //Este es el manejado
   });
 
   if (!parada_a_actualizar){
-    res.status(404).json({message: 'No se encontro la parada de maquina'});
+
+    next(boom.notFound('No existe la parada de maquina que intenta modificar'));
+
+  }else{
+
+    const indice = paradas.indexOf(parada_a_actualizar);
+
+    paradas[indice] = {
+      ...parada_a_actualizar,
+      ...body
+    };
+
+    res.status(200).json(paradas[indice]);
   }
-
-  const indice = paradas.indexOf(parada_a_actualizar);
-
-  paradas[indice] = {
-    ...parada_a_actualizar,
-    ...body
-  };
-
-  res.status(200).json(paradas[indice]);
 });
 
 

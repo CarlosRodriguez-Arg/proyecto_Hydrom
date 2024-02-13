@@ -2,6 +2,7 @@
 
 const express = require('express');
 const rutasApi = require('../routes/index');
+const {erroresBoom, errorJs} = require('../middlewares/manejadores_error');
 
 
       //APP EXPRESS
@@ -19,6 +20,8 @@ const puerto = process.env.PORT || 3000;
 app.use(express.json());
 rutasApi(app);
 
+app.use(erroresBoom);
+app.use(errorJs);
 
       //LOCALHOST
 

@@ -1,0 +1,12 @@
+Método "res.json": este método hace un stingify al objeto recibido como parámetro. En mi código tuve un problema al pasarle
+al método un objeto Error. En este caso, lo consideraba vacío. Tuve que crear un objeto plano y completar sus llaves
+con los valores de los atributos del objeto Error.
+
+Captura de errores: tengo que capturar todos los errores y mandarlos a los middlewares de manejo de error con NEXT(error).
+Aunque en la documentación dice que las promesas rechazadas se tratan automáticamente, en el código no pasó así. Tuve que
+capturarlas con el manejador catch.
+
+Finalización de ciclo petición-respuesta: vimos que los métodos como res.json() finalizaban el ciclo. Sin embargo, en el código
+al haber un next(), luego del método, también lo ejecuta. Esto generaba que, cuando usaba un IF para enviar una respuesta (res.json)
+o pasar al siguiente middleware, enviaba la respuesta y luego pasaba al otro middleware generando el error de cambiar headers
+a una respuesta ya enviada. Para solucionarlo metí el next en la cláusula "else".
