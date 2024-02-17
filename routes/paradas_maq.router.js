@@ -3,6 +3,8 @@
 const express = require('express');
 const boom = require('@hapi/boom');
 const paradas = require('../services/paradas_maquina.service');
+const {post_esquema_parada} = require('../schemas/parada_maq.schema');
+const {generador_validador} = require('../middlewares/validador_esquemas');
 
 
       //ROUTER
@@ -20,9 +22,11 @@ enrutador_paradas_maq.get('/', (req, res)=>{
 
       //ROUTE HANDLER: POST
 
-enrutador_paradas_maq.post('/', (req, res)=>{   //Este es el manejador para cargar las paradas de maquina
-  const peticion = req.body;
-  res.status(201).json(peticion);
+enrutador_paradas_maq.post('/',  //Este es el manejador para cargar las paradas de maquina
+  generador_validador(post_esquema_parada, 'body'),
+  (req, res)=>{
+    const peticion = req.body;
+    res.status(201).json(peticion);
 })
 
 
