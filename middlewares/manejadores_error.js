@@ -1,5 +1,7 @@
       //MIDDLEWARES PARA MANEJO DE ERRRORES
 
+        //PARA ERRORES TIPO BOOM
+
 function erroresBoom (err, req, res, next){
   if (err.isBoom){
     res.status(err.output.statusCode).json(err.output.payload);
@@ -7,6 +9,9 @@ function erroresBoom (err, req, res, next){
     next(err);
   }
 };
+
+
+    //PARA ERRORES EXPRESS Y OTROS
 
 function errorJs(err, req, res, next){
   if (typeof(err) === 'object'){
