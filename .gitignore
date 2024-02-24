@@ -219,6 +219,6 @@ $RECYCLE.BIN/
 postgres_data
 
 #Anotaciones sobre el código
-mis_errores.txt
+.mis_errores.txt
 
 # End of https://www.toptal.com/developers/gitignore/api/node,windows,macos,linux
