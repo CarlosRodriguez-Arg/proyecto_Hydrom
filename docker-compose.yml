@@ -1,0 +1,13 @@
+version: '3.3'
+
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=BASE_DATOS_HYDROM
+      - POSTGRES_USER=carlos
+      - POSTGRES_PASSWORD=calidad1
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
