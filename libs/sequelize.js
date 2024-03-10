@@ -10,6 +10,9 @@ const {Sequelize} = require('sequelize');
 
 const config = require('../config/config');
 
+//IMPORTAMOS NUESTRA FUNCION PARA CONFIGURAR NUESTROS MODELOS
+const configurarModelos = require('../db/models');
+
 
 //CREAMOS UNA URI CON TODOS LOS PARÁMETROS DE CONFIGURACIÓN PARA CONECTARNOS A LA BASE DE DATOS
 
@@ -33,6 +36,8 @@ async function pruebaConexion(){
 
 pruebaConexion();
 
+//Ya conectados a la base de datos, configuramos los modelos
+configurarModelos(sequelize);
 
 module.exports = sequelize;
 
