@@ -1,28 +1,11 @@
 //IMPORTAMOS EL MODELO DE PARADAS_MAQUINA
+const boom  = require('@hapi/boom');
 const {models} = require('../libs/sequelize');
 
 
-class servicioParadas{
+//DEFINIMOS LOS SERVICIOS PARA LAS PARADAS DE MAQUINA
 
-  constructor({
-    id_parada,
-    fecha_parada,
-    hora_parada,
-    maquina,
-    tiempo_parada,
-    fecha_puesta_marcha,
-    hora_puesta_marcha,
-    tipo_intervencion,
-  }){
-    this.id_parada = id_parada,
-    this.fecha_parada = fecha_parada,
-    this.hora_parada = hora_parada,
-    this.maquina = maquina,
-    this.tiempo_parada = tiempo_parada,
-    this.fecha_puesta_marcha = fecha_puesta_marcha,
-    this.hora_puesta_marcha = hora_puesta_marcha,
-    this.tipo_intervencion = tipo_intervencion
-  };
+class servicioParadas{
 
   async nuevaParada(parada){
     const registro_parada = await models.ParadaMaquina.create(parada);
@@ -31,17 +14,32 @@ class servicioParadas{
 
   async listarParadas(){
     const rta = await models.ParadaMaquina.findAll();
-    return rta;
+    if (!rta){
+      throw boom.badImplementation('Error en el servidor al intentar listas las paradas de maquina');
+    }else{
+      return rta;
+    }
   }
 
   async encontrarParada(idParada){
     const rta = await models.ParadaMaquina.findByPk(idParada);
+    if(!rta){
+      throw boom.notFound('No se encontro la parada buscada');
+    }else{
+      return rta;
+    }
+  }
+
+  async actualizarParada(idParada, cambios){
+    const paradaActual = await this.encontrarParada(idParada);
+    const rta = await paradaActual.update(cambios);
     return rta;
   }
-  async actualizarParada(idParada, cambios){
-    const paradaActual = this.encontrarParada(idParada);
-    const rta = paradaActual.update(cambios);
-    return rta;
+
+  async eliminarParada(idParada){
+    const paradaParaEliminar = await this.encontrarParada(idParada);
+    const paradaEliminada = await paradaParaEliminar.destroy();
+    return paradaEliminada;
   }
 };
 

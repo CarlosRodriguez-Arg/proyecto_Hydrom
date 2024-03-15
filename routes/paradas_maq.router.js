@@ -1,26 +1,48 @@
-      //IMPORTS
+//IMPORTS
 
 const express = require('express');
 const boom = require('@hapi/boom');
-const paradas = require('../services/paradas_maquina.service');
+const servicioParadas = require('../services/paradas_maquina.service');
 const {post_esquema_parada} = require('../schemas/parada_maq.schema');
 const {generador_validador} = require('../middlewares/validador_esquemas');
 
 
-      //ROUTER
+//INICIALIZACION DE SERVICIOS
+
+const servicio = new servicioParadas();
+
+
+//ROUTER
 
 const enrutador_paradas_maq = express.Router();
 
 
-      //ROUTE HANDLER: GET
+//ROUTE HANDLER: GET ALL
 
-enrutador_paradas_maq.get('/', (req, res)=>{
-
-  res.json(paradas);
+enrutador_paradas_maq.get('/', async (req, res, next)=>{
+  try{
+  const rta = await servicio.listarParadas();
+  res.json(rta);
+  }catch(error){
+    next(error);
+  }
 })
 
 
-      //ROUTE HANDLER: POST
+//ROUTE HANDLER: GET ONE
+
+  enrutador_paradas_maq.get('/:idParada', async (req, res, next)=>{
+    try{
+      const {idParada} = req.params;
+      const rta = servicio.encontrarParada(idParada)
+      res.json(rta);
+    }catch(error){
+      next(error);
+    }
+  })
+
+
+//ROUTE HANDLER: POST
 
 enrutador_paradas_maq.post('/',  //Este es el manejador para cargar las paradas de maquina
   generador_validador(post_esquema_parada, 'body'),
