@@ -29,14 +29,18 @@ const paradasSchema = {
           msg: "Solo se permite el formato de hora 'dd:dd'. Por ejemplo: 03:30"}}},
     id_maquina: {
       type: DataTypes.INTEGER,
-      allowNull: false},
+      allowNull: false,
+      validate:{
+        is: {
+          args: /^\w{3}-\d{3}$/,
+          msg: "El formato permitido es 'www-ddd'. Por ejemplo: API-001"}}},
     id_puesta_marcha: {
       type: DataTypes.INTEGER,
       allowNull: true}
 }
 
 //Model nos da varios metodos (como, findAll) y vincula el modelo Parada_maquina con el instancia "sequelize"
-class Parada_maquina extends Model{
+class ParadaMaquina extends Model{
 
   /*Al usar init debemos pasarle en el objeto de configuracion la conexion
 a la base de datos "sequelize". Asi queda vinculado con Model.*/
@@ -45,12 +49,12 @@ static config(sequelize){
     return {
       sequelize,
       tableName: PARADAS_TABLA,
-      modelName: 'Parada_maquina',
+      modelName: 'ParadaMaquina',
       timestamps: false
     }
   }
 };
 
 
-module.exports = {Parada_maquina, PARADAS_TABLA, paradasSchema};
+module.exports = {ParadaMaquina, PARADAS_TABLA, paradasSchema};
 

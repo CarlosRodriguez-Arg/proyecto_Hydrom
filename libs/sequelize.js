@@ -36,7 +36,7 @@ async function pruebaConexion(){
 
 pruebaConexion();
 
-//Ya conectados a la base de datos, configuramos los modelos
+//Ya conectados a la base de datos, configuramos los modelos y los vinculamos con la conexion creada
 configurarModelos(sequelize);
 
 module.exports = sequelize;

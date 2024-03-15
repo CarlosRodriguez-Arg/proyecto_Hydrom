@@ -1,4 +1,8 @@
-class Paradas_maquina{
+//IMPORTAMOS EL MODELO DE PARADAS_MAQUINA
+const {models} = require('../libs/sequelize');
+
+
+class servicioParadas{
 
   constructor({
     id_parada,
@@ -18,22 +22,28 @@ class Paradas_maquina{
     this.fecha_puesta_marcha = fecha_puesta_marcha,
     this.hora_puesta_marcha = hora_puesta_marcha,
     this.tipo_intervencion = tipo_intervencion
+  };
+
+  async nuevaParada(parada){
+    const registro_parada = await models.ParadaMaquina.create(parada);
+    return registro_parada;
+  };
+
+  async listarParadas(){
+    const rta = await models.ParadaMaquina.findAll();
+    return rta;
   }
-}
 
-let paradas = [];
+  async encontrarParada(idParada){
+    const rta = await models.ParadaMaquina.findByPk(idParada);
+    return rta;
+  }
+  async actualizarParada(idParada, cambios){
+    const paradaActual = this.encontrarParada(idParada);
+    const rta = paradaActual.update(cambios);
+    return rta;
+  }
+};
 
-for (let index = 0; index < 11; index++) {
-  paradas.push(new Paradas_maquina({
-    id_parada:index,
-    fecha_parada : '24/02/2024',
-    hora_parada : '13:45',
-    maquina : 'Anayak',
-    tiempo_parada : '2:45',
-    fecha_puesta_marcha : '25/02/2024',
-    hora_puesta_marcha : '01:00',
-    tipo_intervencion: 'Preventiva'
-  }))
-}
 
-module.exports = paradas;
+module.exports = servicioParadas;

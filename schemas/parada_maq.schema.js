@@ -5,7 +5,6 @@ const esquema_hora = joi.string().pattern(/^\d{2}:\d{2}$/);
 const esquema_cod_maq = joi.string().pattern(/^[a-zA-Z]{3}-\d{3}$/);
 
 const post_esquema_parada = joi.object({
-  id_parada: joi.number().integer().min(1),
   fecha_parada: esquema_fecha,
   hora_parada: esquema_hora,
   maquina: esquema_cod_maq,
