@@ -1,6 +1,6 @@
 const {DataTypes, Model} = require('sequelize');
 
-//Defino el nombre de la tabla para poder usarla como argumento en las migraciones
+//Defino el nombre de la tabla para poder usarla como argumento al usar queryInterface
 
 const PARADAS_TABLA = 'paradas_maquina';
 
@@ -39,20 +39,20 @@ const paradasSchema = {
       allowNull: true}
 }
 
-//Model nos da varios metodos (como, findAll) y vincula el modelo Parada_maquina con el instancia "sequelize"
+//Model nos da varios metodos (como, findAll, destroy, etc.) y vincula el modelo Parada_maquina con la instancia "sequelize"
 class ParadaMaquina extends Model{
 
   /*Al usar init debemos pasarle en el objeto de configuracion la conexion
 a la base de datos "sequelize". Asi queda vinculado con Model.*/
 
-static config(sequelize){
-    return {
-      sequelize,
-      tableName: PARADAS_TABLA,
-      modelName: 'ParadaMaquina',
-      timestamps: false
+  static config(sequelize){
+      return {
+        sequelize,
+        tableName: PARADAS_TABLA,
+        modelName: 'ParadaMaquina',
+        timestamps: false
+      }
     }
-  }
 };
 
 
