@@ -20,27 +20,30 @@ const puerto = process.env.PORT || 3000;
 app.use(express.json());
 
 
-//MANEJAMOS LOS CORS
+//DEFINIMOS LOS ORIGENES PERMITIDOS PARA ACCEDER A LA API
 
-let whiteList = ['http://127.0.0.1:5500'];
+let whiteList = ['http://127.0.0.1:5500', 'http://localhost:8080'];
 
 const options = {
   origin: (origin, callback)=>{
     if(whiteList.includes(origin)){
       callback(null, true);
     }else{
-      callback(new Error('Acceso denegado'));
+      callback(new Error('Acceso denegado por politica de CORS'));
     }
   }
 }
-
-app.use(cors(options));
 
 
 //INGREMAOS A LAS RUTAS
 
 rutasApi(app);
 
+
+//MANEJAMOS EL PROBLEMA DE CORS
+// IMPORTANTE!! --> APP.USE(CORS(OPTIONS)) DEBE ESTAR DESPUES DE LAS RUTAS, SINO BLOQUEA TODO
+
+app.use(cors(options));
 
 //MIDDLEWARES PARA MANEJO DE ERRORES
 
