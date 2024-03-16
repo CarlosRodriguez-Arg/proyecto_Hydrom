@@ -1,9 +1,8 @@
 //IMPORTS
 
 const express = require('express');
-const boom = require('@hapi/boom');
 const servicioParadas = require('../services/paradas_maquina.service');
-const {post_esquema_parada} = require('../schemas/parada_maq.schema');
+const {post_esquema_parada, get_esquema_parada, patch_esquema_parada} = require('../schemas/parada_maq.schema');
 const {generador_validador} = require('../middlewares/validador_esquemas');
 
 
@@ -12,7 +11,7 @@ const {generador_validador} = require('../middlewares/validador_esquemas');
 const servicio = new servicioParadas();
 
 
-//ROUTER
+//GENERAMOS EL ENRUTADOR
 
 const enrutador_paradas_maq = express.Router();
 
@@ -21,17 +20,20 @@ const enrutador_paradas_maq = express.Router();
 
 enrutador_paradas_maq.get('/', async (req, res, next)=>{
   try{
-  const rta = await servicio.listarParadas();
-  res.json(rta);
+    const rta = await servicio.listarParadas();
+    res.json(rta);
   }catch(error){
     next(error);
   }
-})
+  }
+);
 
 
 //ROUTE HANDLER: GET ONE
 
-  enrutador_paradas_maq.get('/:idParada', async (req, res, next)=>{
+enrutador_paradas_maq.get('/:idParada',
+  generador_validador(get_esquema_parada, 'params'),
+  async (req, res, next)=>{
     try{
       const {idParada} = req.params;
       const rta = servicio.encontrarParada(idParada)
@@ -39,61 +41,62 @@ enrutador_paradas_maq.get('/', async (req, res, next)=>{
     }catch(error){
       next(error);
     }
-  })
+  }
+);
 
 
 //ROUTE HANDLER: POST
 
-enrutador_paradas_maq.post('/',  //Este es el manejador para cargar las paradas de maquina
+enrutador_paradas_maq.post(  //Este es el manejador para cargar las paradas de maquina
+  '/',
   generador_validador(post_esquema_parada, 'body'),
-  (req, res)=>{
-    const peticion = req.body;
-    res.status(201).json(peticion);
-})
-
-
-      //ROUTE HANDLER: PATCH
-
-enrutador_paradas_maq.patch('/:id_parada', (req, res, next)=>{   //Este es el manejador para actualizar las paradas de maquina
-
-  const { id_parada } = req.params;
-
-  const body = req.body;
-
-  const parada_a_actualizar = paradas.find((elemento)=>{
-    return elemento.id_parada === Number(id_parada);
-  });
-
-  if (!parada_a_actualizar){
-
-    next(boom.notFound('No existe la parada de maquina que intenta modificar'));
-
-  }else{
-
-    const indice = paradas.indexOf(parada_a_actualizar);
-
-    paradas[indice] = {
-      ...parada_a_actualizar,
-      ...body
-    };
-
-    res.status(200).json(paradas[indice]);
+  async (req, res, next)=>{
+    try{
+      const nuevaParada = await servicio.nuevaParada(req.body);
+      res.status(201).json(nuevaParada);
+    }catch(error){
+      next(error);
+    }
   }
-});
+);
 
 
-      //ROUTE HANDLER: DELETE
+//ROUTE HANDLER: PATCH
 
-enrutador_paradas_maq.delete('/:id_parada', (req, res)=>{
-  const { id_parada} = req.params;
+enrutador_paradas_maq.patch(
+  '/:idParada',
+  generador_validador(get_esquema_parada, 'params'),
+  generador_validador(patch_esquema_parada, 'body'),
+  async (req, res, next)=>{
+    const {idParada} = req.params;
+    const cambios = req.body;
+    try{
+      const paradaActualizada = await servicio.actualizarParada(idParada, cambios);
+      res.status(200).json(paradaActualizada);
+    }catch(error){
+      next(error);
+    }
+  }
+);
 
-  res.json({
-    id: id_parada,
-    message: 'Se elimino la parada'
-  })
-});
+
+//ROUTE HANDLER: DELETE
+
+enrutador_paradas_maq.delete(
+  '/:idParada',
+  generador_validador(get_esquema_parada, 'params'),
+  async (req, res, next)=>{
+    const {idParada} = req.params;
+    try{
+      const paradaEliminada = await servicio.eliminarParada(idParada);
+      res.status(200).json(paradaEliminada);
+    }catch(error){
+      next(error);
+    }
+  }
+);
 
 
-      //EXPORT
+//EXPORT
 
 module.exports = enrutador_paradas_maq;

@@ -1,4 +1,4 @@
-      //IMPORTS
+//IMPORTS
 
 const enrutador_programa_mantenimiento = require('./prog_mantenimiento.router.js');
 const enrutador_paradas_maq = require('./paradas_maq.router.js');
@@ -7,12 +7,12 @@ const enrutador_int_preventivas = require('./intervenciones_preventivas.router.j
 const express = require('express');
 
 
-      //ROUTER
+//ROUTER
 
 const enrutador_versiones = express.Router();
 
 
-      //MAIN FUNCTION
+//MAIN FUNCTION
 
 function rutasApi(app){
   app.use('/API/V1', enrutador_versiones);
@@ -24,7 +24,7 @@ function rutasApi(app){
 }
 
 
-      //EXPORT
+//EXPORT
 
 module.exports = rutasApi;
 

@@ -8,7 +8,7 @@ const boom = require('@hapi/boom');
 function generador_validador(esquema, propiedad){
   return function(req, res, next){
     const dato = req[propiedad];
-    const {error} = esquema.validate(dato)
+    const {error} = esquema.validate(dato);
     if(!error){
       next();
     }else{

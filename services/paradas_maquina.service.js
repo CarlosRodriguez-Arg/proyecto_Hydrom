@@ -9,7 +9,11 @@ class servicioParadas{
 
   async nuevaParada(parada){
     const registro_parada = await models.ParadaMaquina.create(parada);
-    return registro_parada;
+    if (!registro_parada){
+      throw boom.badImplementation('Error al cargar la nueva parada de maquina');
+    }else{
+      return registro_parada;
+    }
   };
 
   async listarParadas(){
@@ -19,7 +23,7 @@ class servicioParadas{
     }else{
       return rta;
     }
-  }
+  };
 
   async encontrarParada(idParada){
     const rta = await models.ParadaMaquina.findByPk(idParada);
@@ -28,20 +32,29 @@ class servicioParadas{
     }else{
       return rta;
     }
-  }
+  };
 
   async actualizarParada(idParada, cambios){
     const paradaActual = await this.encontrarParada(idParada);
     const rta = await paradaActual.update(cambios);
-    return rta;
-  }
+    if(!rta){
+      throw boom.badImplementation('No se pudo actualizar la parada seleccionada');
+    }else{
+      return rta;
+    }
+  };
 
   async eliminarParada(idParada){
     const paradaParaEliminar = await this.encontrarParada(idParada);
     const paradaEliminada = await paradaParaEliminar.destroy();
-    return paradaEliminada;
-  }
-};
+    if(!paradaEliminada){
+      throw boom.badImplementation('No se pudo eliminar la parada de maquina elegida');
+    }else{
+      return paradaEliminada;
+    }
+  };
+
+}
 
 
 module.exports = servicioParadas;
