@@ -15,8 +15,9 @@ const paradasSchema = {
 
     id_parada: {
       type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true},
+      autoIncrement: true,
+      allowNull: false,
+      primaryKey: true},
     fecha_parada: {
       type: DataTypes.DATEONLY,
       allowNull: false},
@@ -28,7 +29,7 @@ const paradasSchema = {
           args: /^\d\d:\d\d$/,
           msg: "Solo se permite el formato de hora 'dd:dd'. Por ejemplo: 03:30"}}},
     id_maquina: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
       validate:{
         is: {
