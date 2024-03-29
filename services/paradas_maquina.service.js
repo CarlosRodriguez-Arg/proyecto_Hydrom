@@ -26,6 +26,7 @@ class servicioParadas{
   };
 
   async encontrarParada(idParada){
+    console.log(typeof idParada)
     const rta = await models.ParadaMaquina.findByPk(idParada);
     if(!rta){
       throw boom.notFound('No se encontro la parada buscada');
@@ -47,10 +48,11 @@ class servicioParadas{
   async eliminarParada(idParada){
     const paradaParaEliminar = await this.encontrarParada(idParada);
     const paradaEliminada = await paradaParaEliminar.destroy();
+
     if(!paradaEliminada){
       throw boom.badImplementation('No se pudo eliminar la parada de maquina elegida');
     }else{
-      return paradaEliminada;
+      return paradaParaEliminar.dataValues;
     }
   };
 

@@ -8,11 +8,11 @@ const esquema_cod_maq = joi.string().pattern(/^[a-zA-Z]{3}-\d{3}$/);
 const post_esquema_parada = joi.object({
   id_maquina: esquema_cod_maq.required(),
   id_puesta_marcha: joi.number().integer(),
-  fecha_hora_parada: joi.string()
+  fecha_hora_parada: joi.string().pattern(/^\d{4}-\d{2}-\d{2} \d{1,2}:\d{1,2}$/)
 })
 
 const get_esquema_parada = joi.object({
-  id: esquema_id_Parada
+  idParada: esquema_id_Parada
 })
 
 const patch_esquema_parada = joi.object({

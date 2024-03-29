@@ -36,7 +36,7 @@ enrutador_paradas_maq.get('/:idParada',
   async (req, res, next)=>{
     try{
       const {idParada} = req.params;
-      const rta = servicio.encontrarParada(idParada)
+      const rta = await servicio.encontrarParada(Number(idParada));
       res.json(rta);
     }catch(error){
       next(error);
@@ -71,7 +71,7 @@ enrutador_paradas_maq.patch(
     const {idParada} = req.params;
     const cambios = req.body;
     try{
-      const paradaActualizada = await servicio.actualizarParada(idParada, cambios);
+      const paradaActualizada = await servicio.actualizarParada(Number(idParada), cambios);
       res.status(200).json(paradaActualizada);
     }catch(error){
       next(error);
@@ -88,8 +88,8 @@ enrutador_paradas_maq.delete(
   async (req, res, next)=>{
     const {idParada} = req.params;
     try{
-      const paradaEliminada = await servicio.eliminarParada(idParada);
-      res.status(200).json(paradaEliminada);
+      const paradaEliminada = await servicio.eliminarParada(Number(idParada));
+      res.status(200).send(paradaEliminada);
     }catch(error){
       next(error);
     }
