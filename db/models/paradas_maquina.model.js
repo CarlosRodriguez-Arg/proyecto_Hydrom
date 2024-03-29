@@ -1,4 +1,4 @@
-const {DataTypes, Model} = require('sequelize');
+const {DataTypes, Model, Sequelize} = require('sequelize');
 
 //Defino el nombre de la tabla para poder usarla como argumento al usar queryInterface
 
@@ -17,27 +17,27 @@ const paradasSchema = {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       allowNull: false,
-      primaryKey: true},
-    fecha_parada: {
-      type: DataTypes.DATEONLY,
-      allowNull: false},
-    hora_parada: {
-      type: DataTypes.STRING,
+      primaryKey: true
+    },
+    fecha_hora_parada:{
+      type: DataTypes.DATE,
       allowNull: false,
-      validate:{
-        is:{
-          args: /^\d\d:\d\d$/,
-          msg: "Solo se permite el formato de hora 'dd:dd'. Por ejemplo: 03:30"}}},
+      set(value){
+        this.setDataValue('fecha_hora_parada', Sequelize.fn('TO_TIMESTAMP', value, 'YYYY-MM-DD HH24:MI'));
+      }
+    },
     id_maquina: {
       type: DataTypes.STRING,
       allowNull: false,
       validate:{
         is: {
           args: /^\w{3}-\d{3}$/,
-          msg: "El formato permitido es 'www-ddd'. Por ejemplo: API-001"}}},
+          msg: "El formato permitido es 'www-ddd'. Por ejemplo: API-001"}}
+    },
     id_puesta_marcha: {
       type: DataTypes.INTEGER,
-      allowNull: true}
+      allowNull: true
+    }
 }
 
 //Model nos da varios metodos (como, findAll, destroy, etc.) y vincula el modelo Parada_maquina con la instancia "sequelize"

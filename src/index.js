@@ -40,11 +40,6 @@ const options = {
 rutasApi(app);
 
 
-//MANEJAMOS EL PROBLEMA DE CORS
-// IMPORTANTE!! --> APP.USE(CORS(OPTIONS)) DEBE ESTAR DESPUES DE LAS RUTAS, SINO BLOQUEA TODO
-
-app.use(cors(options));
-
 //MIDDLEWARES PARA MANEJO DE ERRORES
 
 app.use(erroresBoom);
@@ -57,4 +52,9 @@ app.listen(puerto, ()=>{
   console.log(`Escuchando puerto: http://localhost:${puerto}`)
 });
 
+
+//MANEJAMOS EL PROBLEMA DE CORS
+// IMPORTANTE!! --> APP.USE(CORS(OPTIONS)) DEBE ESTAR DESPUES DE LAS RUTAS, SINO BLOQUEA TODO
+
+app.use(cors(options));
 
