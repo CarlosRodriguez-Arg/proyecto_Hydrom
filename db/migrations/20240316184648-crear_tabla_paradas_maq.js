@@ -8,8 +8,7 @@ module.exports = {
   },
 
   async down (queryInterface) {
-    queryInterface.dropTable(PARADAS_TABLA);
+    await queryInterface.dropTable(PARADAS_TABLA);
   }
-
 };
 
