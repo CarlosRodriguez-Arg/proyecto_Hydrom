@@ -31,12 +31,12 @@ enrutador_paradas_maq.get('/', async (req, res, next)=>{
 
 //ROUTE HANDLER: GET ONE
 
-enrutador_paradas_maq.get('/:idParada',
+enrutador_paradas_maq.get('/:id_parada',
   generador_validador(get_esquema_parada, 'params'),
   async (req, res, next)=>{
     try{
-      const {idParada} = req.params;
-      const rta = await servicio.encontrarParada(Number(idParada));
+      const {id_parada} = req.params;
+      const rta = await servicio.encontrarParada(Number(id_parada));
       res.json(rta);
     }catch(error){
       next(error);
@@ -64,14 +64,14 @@ enrutador_paradas_maq.post(  //Este es el manejador para cargar las paradas de m
 //ROUTE HANDLER: PATCH
 
 enrutador_paradas_maq.patch(
-  '/:idParada',
+  '/:id_parada',
   generador_validador(get_esquema_parada, 'params'),
   generador_validador(patch_esquema_parada, 'body'),
   async (req, res, next)=>{
-    const {idParada} = req.params;
+    const {id_parada} = req.params;
     const cambios = req.body;
     try{
-      const paradaActualizada = await servicio.actualizarParada(Number(idParada), cambios);
+      const paradaActualizada = await servicio.actualizarParada(Number(id_parada), cambios);
       res.status(200).json(paradaActualizada);
     }catch(error){
       next(error);
@@ -83,12 +83,12 @@ enrutador_paradas_maq.patch(
 //ROUTE HANDLER: DELETE
 
 enrutador_paradas_maq.delete(
-  '/:idParada',
+  '/:id_parada',
   generador_validador(get_esquema_parada, 'params'),
   async (req, res, next)=>{
-    const {idParada} = req.params;
+    const {id_parada} = req.params;
     try{
-      const paradaEliminada = await servicio.eliminarParada(Number(idParada));
+      const paradaEliminada = await servicio.eliminarParada(Number(id_parada));
       res.status(200).send(paradaEliminada);
     }catch(error){
       next(error);

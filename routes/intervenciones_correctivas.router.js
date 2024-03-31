@@ -33,12 +33,12 @@ enrutador_int_correctivas.get(
 //ROUTE HANDLER: GET ONE
 
 enrutador_int_correctivas.get(
-  '/:idIntervencion',
+  '/:id_int_correctiva',
   generador_validador(get_esquema_correctiva, 'params'),
   async (req, res, next)=>{
     try{
-      const {idIntervencion} = req.params;
-      const rta = await servicio.encontrarIntervencion(Number(idIntervencion));
+      const {id_int_correctiva} = req.params;
+      const rta = await servicio.encontrarIntervencion(Number(id_int_correctiva));
       res.status(200).json(rta);
     }catch(error){
       next(error);
@@ -66,12 +66,13 @@ enrutador_int_correctivas.post(
 //ROUTE HANDLER: PATCH
 
 enrutador_int_correctivas.patch(
-  '/:idIntervencion',
+  '/:id_int_correctiva',
   generador_validador(get_esquema_correctiva, 'params'),
   generador_validador(patch_esquema_correctiva, 'body'),
   async(req, res, next)=>{
     try{
-      const intervActializada = await servicio.actualizarIntervencion(Number(req.params),req.body);
+      const {id_int_correctiva} = req.params;
+      const intervActializada = await servicio.actualizarIntervencion(Number(id_int_correctiva), req.body);
       res.status(200).json(intervActializada);
     }catch(error){
       next(error);
@@ -83,12 +84,12 @@ enrutador_int_correctivas.patch(
 //ROUTE HANDLER: DELETE
 
 enrutador_int_correctivas.delete(
-  '/:idIntervencion',
+  '/:id_int_correctiva',
   generador_validador(get_esquema_correctiva, 'params'),
   async (req, res, next)=>{
-    const {idIntervencion} = req.params;
+    const {id_int_correctiva} = req.params;
     try{
-      const intervencionEliminada = await servicio.eliminarIntervencion(Number(idIntervencion));
+      const intervencionEliminada = await servicio.eliminarIntervencion(Number(id_int_correctiva));
       res.status(200).send(intervencionEliminada);
     }catch(error){
       next(error);

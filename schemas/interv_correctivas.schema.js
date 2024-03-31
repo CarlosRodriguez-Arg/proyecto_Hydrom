@@ -25,12 +25,10 @@ const post_esquema_correctiva = joi.object({
 });
 
 const get_esquema_correctiva = joi.object({
-
   id_int_correctiva: joi.number().integer().required()
-});
+})
 
 const patch_esquema_correctiva = joi.object({
-  id_int_correctiva: joi.number().integer().required(),
   id_parada: joi.number().integer(),
   fecha_hora_solicitud: fecha_hora,
   fecha_hora_inicio_inter: fecha_hora,

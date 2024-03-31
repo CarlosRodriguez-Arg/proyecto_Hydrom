@@ -12,7 +12,6 @@ function generador_validador(esquema, propiedad){
     if(!error){
       next();
     }else{
-
       next(boom.badRequest(error));
     }
   }

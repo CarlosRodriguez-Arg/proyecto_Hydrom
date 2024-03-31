@@ -12,7 +12,7 @@ const post_esquema_parada = joi.object({
 })
 
 const get_esquema_parada = joi.object({
-  idParada: esquema_id_Parada
+  id_parada: esquema_id_Parada
 })
 
 const patch_esquema_parada = joi.object({
