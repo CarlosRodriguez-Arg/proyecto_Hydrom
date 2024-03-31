@@ -26,7 +26,6 @@ class servicioParadas{
   };
 
   async encontrarParada(idParada){
-    console.log(typeof idParada)
     const rta = await models.ParadaMaquina.findByPk(idParada);
     if(!rta){
       throw boom.notFound('No se encontro la parada buscada');

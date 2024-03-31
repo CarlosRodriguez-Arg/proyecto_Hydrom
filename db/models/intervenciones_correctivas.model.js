@@ -48,9 +48,6 @@ const interCorrSchema = {
     posibles_causas: {
       type: DataTypes.TEXT('tiny'),
     },
-    id_sistema_intervencion: {
-      type: DataTypes.INTEGER,
-    },
     acciones_correctivas: {
       type: DataTypes.TEXT('tiny'),
     },
