@@ -1,54 +1,104 @@
-      //IMPORTS
+//IMPORTS
 
 const express = require('express');
+const {post_esquema_preventiva, get_esquema_preventiva, patch_esquema_preventiva} = require('../schemas/interv_preventivas.schema');
+const servicioIntervPreventivas = require('../services/interv_preventivas.service');
+const {generador_validador} = require('../middlewares/validador_esquemas');
 
 
-      //ROUTER
+//INICIALIZAMOS EL SERVICIO
+
+const servicio = new servicioIntervPreventivas();
+
+
+//ROUTER
 
 const enrutador_int_preventivas = express.Router();
 
 
-      //ROUTE HANDLER: GET
+//ROUTE HANDLER: GET ALL
 
-enrutador_int_preventivas.get('/', (req, res)=>{   //Este manejador tiene que traer todas las intervenciones preventivas
-  res.json({
-    fecha_hora_lanzamiento: '14/05/2024 13:45',
-    maquina: 'Anayak',
-    estado: 'Lanzada',
-    tareas: [{
-      tipo_tarea: 'inspeccionar',
-      componente: 'correa de distribucion',//Ver si no seria mejor incluir "codigo" y "descripcion"
-      completada: 'false'
-    },{
-      tipo_tarea: 'cambiar',
-      componente: 'filtro',
-      completada: 'true'
-    }],
-    consumo_rep_insumos_adicionales: [{  //En mi opinion no deberia aclarar el consumo ya que esta definido en cada tarea
-      id_rep_insumo: 2344,               //y si la tarea se completo deberia haber usado el recurso asociado a ella
-      denominacion: 'filtro',
-      cantidad: 1,                       //Dejamos la propiedad consumo_rep_insumos_adicionales para el uso de recursos
-      unidad_medida: 'unidad'            //adicionales a los ya definidos para las tareas
-    }],
-    fecha_parada:'14/05/2024',
-    hora_parada: '13:45',
-    interrupciones:[{
-      id_interrupcion: 123,
-      fecha_inicio: '14/05/2024',
-      hora_inicio: '17:45',
-      motivo: 'Almuerzo',
-      fecha_fin: '14/05/2024',
-      hora_fin: '18:45',
-    }],
-    otras_tareas_preventivas: [
-      'se encero rodamiento conico',
-    'se limpio cadena de dsitribucion'],
-    fecha_puesta_marcha: '15/05/2024',
-    hora_puesta_marcha: '01:00'
-  })
-});
+enrutador_int_preventivas.get(
+  '/',
+  async (req, res, next)=>{
+    try{
+      const rta = await servicio.listarIntervenciones();
+      res.status(200).json(rta);
+    }catch(error){
+      next(error);
+    }
+  }
+);
 
 
-      //EXPORT
+//ROUTE HANDLER: GET ONE
+
+enrutador_int_preventivas.get(
+  '/:id_int_preventiva',
+  generador_validador(get_esquema_preventiva, 'params'),
+  async (req, res, next)=>{
+    try{
+      const {id_int_preventiva} = req.params;
+      const rta = await servicio.encontrarIntervencion(Number(id_int_preventiva));
+      res.status(200).json(rta);
+    }catch(error){
+      next(error);
+    }
+  }
+);
+
+
+//ROUTE HANDLER: POST
+
+enrutador_int_preventivas.post(
+  '/',
+  generador_validador(post_esquema_preventiva, 'body'),
+  async (req, res, next)=>{
+    try{
+      const nuevaIntervencion = await servicio.nuevaInterv(req.body);
+      res.status(201).json(nuevaIntervencion);
+    }catch(error){
+      next(error);
+    }
+  }
+);
+
+
+//ROUTE HANDLER: PATCH
+
+enrutador_int_preventivas.patch(
+  '/:id_int_preventiva',
+  generador_validador(get_esquema_preventiva, 'params'),
+  generador_validador(patch_esquema_preventiva, 'body'),
+  async(req, res, next)=>{
+    try{
+      const {id_int_preventiva} = req.params;
+      const intervActializada = await servicio.actualizarIntervencion(Number(id_int_preventiva), req.body);
+      res.status(200).json(intervActializada);
+    }catch(error){
+      next(error);
+    }
+  }
+);
+
+
+//ROUTE HANDLER: DELETE
+
+enrutador_int_preventivas.delete(
+  '/:id_int_preventiva',
+  generador_validador(get_esquema_preventiva, 'params'),
+  async (req, res, next)=>{
+    const {id_int_preventiva} = req.params;
+    try{
+      const intervencionEliminada = await servicio.eliminarIntervencion(Number(id_int_preventiva));
+      res.status(200).send(intervencionEliminada);
+    }catch(error){
+      next(error);
+    }
+  }
+);
+
+
+//EXPORT
 
 module.exports = enrutador_int_preventivas;

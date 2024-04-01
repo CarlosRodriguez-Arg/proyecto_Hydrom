@@ -2,7 +2,7 @@
 
 const {ParadaMaquina, paradasSchema} = require('./paradas_maquina.model');
 const {InterCorrectivas, interCorrSchema} = require('./intervenciones_correctivas.model');
-// const {Parada_maquina, paradasSchema} = require('./paradas_maquina.model');
+const {InterPreventivas, interPreventivaSchema} = require('./intervenciones_preventivas.model');
 
 
 //Definimos una funcion que va a pasarle la conexion de la base de datos a cada modelo para configurarlo
@@ -10,7 +10,7 @@ const {InterCorrectivas, interCorrSchema} = require('./intervenciones_correctiva
 function configurarModelos(sequelize){
   ParadaMaquina.init(paradasSchema, ParadaMaquina.config(sequelize));
   InterCorrectivas.init(interCorrSchema, InterCorrectivas.config(sequelize));
-  // Parada_maquina.init(paradasSchema, Parada_maquina.config(sequelize));
+  InterPreventivas.init(interPreventivaSchema, InterPreventivas.config(sequelize));
 
 }
 
